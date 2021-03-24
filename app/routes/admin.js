@@ -1,7 +1,7 @@
 module.exports = function(app){
 
     app.get('/formulario_inclusao_noticia', function(req, res){
-        res.render("admin/form_add_noticia")
+        res.render("admin/form_add_noticia", {validacao: {}} )
     })
 
     app.post('/noticias/salvar', function(req, res){
@@ -17,10 +17,11 @@ module.exports = function(app){
 
         const erros = req.validationErrors()
 
-        if(erros){
-            res.render("admin/form_add_noticia")
+            if(erros){
+            res.render("admin/form_add_noticia", {validacao : erros})
             return
         }
+
 
         const connection = app.config.dbConnection()
         const noticiasModel = new app.app.models.NoticiasDAO(connection)
